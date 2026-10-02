@@ -9,50 +9,56 @@
 Input:
     - TreeNode: root 
 Output:
-    - List[List[int]]: sublists of values of nodes at each particular level (from L to R)
+    - List[List[int]] : level order traversal as nested list 
 Constraints:
-    - number of nodes: [0,1000]
-    - range of values: [-1000,1000]
+    - possible number of nodes: [0,2000]
+    - possible values of nodes: [-1000,1000]
 
-Plan: 
-BFs Search 
+Plan: BFS 
+
+result = []
+queue = deque()
+add root node to queue 
+
+while queue:
+    totalNodes = len(queue)
+    currLevel = []
+
+    for i in range(totalNodes):
+        pop from front of queue and add node to current level
+        add children of current node to queue 
+
+    add currLevel to result list 
+
+return result 
 """
-
 from collections import deque
 
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    def levelOrder(self, root: Optional[eTreeNode]) -> List[List[int]]:
         if not root:
             return []
 
-        # bfs traversal 
+        res = []
         queue = deque()
         queue.append(root)
-        
-        res = []
 
-        # while there are nodes to process in the tree 
-        while queue: 
-            # get the number of nodes in the current level 
-            currLevelLength = len(queue)
-            level = []
-            
-            # process all nodes in the current level 
-            for i in range(currLevelLength):
+        while queue:
+            totalNodes = len(queue)
+            currLevel = []
+
+            for i in range(totalNodes):
                 currNode = queue.popleft()
-                level.append(currNode.val)
+                currLevel.append(currNode.val)
 
-                # add the left and right children of the current node to the queue to be processed later 
                 if currNode.left: queue.append(currNode.left)
                 if currNode.right: queue.append(currNode.right)
-                
-            # add the sublist of the current level to the result 
-            res.append(level)
-            
-        return res
+
+            res.append(currLevel)
+
+        return res 
 
 
 
 
 
-        
